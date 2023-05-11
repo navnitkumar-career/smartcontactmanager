@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import io.github.pixee.security.Filenames;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -95,10 +96,10 @@ public class UserController {
 				System.out.println("File is Empty");
 				contact.setImage("3.jpeg");
 			} else {
-				contact.setImage(file.getOriginalFilename());
+				contact.setImage(Filenames.toSimpleFileName(file.getOriginalFilename()));
 				File UPLOAD_DIR = new ClassPathResource("static/images").getFile();
 				Path filePath = Paths
-						.get(UPLOAD_DIR.getAbsolutePath() + File.pathSeparator + file.getOriginalFilename());
+						.get(UPLOAD_DIR.getAbsolutePath() + File.pathSeparator + Filenames.toSimpleFileName(file.getOriginalFilename()));
 				Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 				System.out.println("file upload successfully");
 
@@ -193,9 +194,9 @@ public class UserController {
 				// update new file
 				File UPLOAD_DIR = new ClassPathResource("static/images/").getFile();
 				Path filePath = Paths
-						.get(UPLOAD_DIR.getAbsolutePath() + File.pathSeparator + file.getOriginalFilename());
+						.get(UPLOAD_DIR.getAbsolutePath() + File.pathSeparator + Filenames.toSimpleFileName(file.getOriginalFilename()));
 				Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-				contact.setImage(file.getOriginalFilename());
+				contact.setImage(Filenames.toSimpleFileName(file.getOriginalFilename()));
 			} else {
 				contact.setImage(oldContactDetails.getImage());
 			}
